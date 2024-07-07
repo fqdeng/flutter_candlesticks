@@ -224,11 +224,11 @@ class _OHLCVPainter extends CustomPainter {
       for (int i = 0; i < gridLineAmount; i++) {
         gridLineY = (gridLineDist * i).round().toDouble();
         canvas.drawLine(new Offset(0.0, gridLineY),
-            new Offset(width, gridLineY), gridPaint);
+            new Offset(size.width, gridLineY), gridPaint);
 
         // Label grid lines
         gridLineTextPainters[i]
-            .paint(canvas, new Offset(width + 2.0, gridLineY - 6.0));
+            .paint(canvas, new Offset(width + 2.0, gridLineY + 2.0));
       }
 
       // Label volume line
