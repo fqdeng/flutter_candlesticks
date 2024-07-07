@@ -22,6 +22,9 @@ Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_candles
 | increaseColor      | Default `Colors.green`. Color of increasing candles.                     |
 | decreaseColor      | Default `Colors.red`. Color of decreasing candles.                       |
 
+### Latest Image
+<img src="./screenshots/latest.png" >
+
 ## Examples
 
 ### No Grid Lines
@@ -34,9 +37,6 @@ new OHLCVGraph(
     )
 )
 ```
-
-### Latest Image
-<img src="./screenshots/latest.png" >
 
 <img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_large.png" width="50%"><img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/dark_large.png" width="50%">
 
