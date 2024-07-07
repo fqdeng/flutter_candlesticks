@@ -35,6 +35,9 @@ new OHLCVGraph(
 )
 ```
 
+### Latest Image
+<img src="./screenshots/latest.png" >
+
 <img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/white_large.png" width="50%"><img src="https://raw.githubusercontent.com/trentpiercy/flutter-candlesticks/master/screenshots/dark_large.png" width="50%">
 
 > Candle size dynamically changes by amount of data
