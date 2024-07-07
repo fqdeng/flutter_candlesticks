@@ -342,9 +342,9 @@ class _OHLCVPainter extends CustomPainter {
       var low = data[item]["low"];
       var volumeto = data[item]["volumeto"];
       var offset = null;
-      offset = drawText("high: $high", offset, rectWidth, canvas);
+      offset = drawText("high: $high", null, rectWidth, canvas);
       offset = drawText("low: $low", offset, rectWidth, canvas);
-      offset = drawText("open: $open", null, rectWidth, canvas);
+      offset = drawText("open: $open", offset, rectWidth, canvas);
       offset = drawText("close: $close", offset, rectWidth, canvas);
       offset = drawText("volume: $volumeto", offset, rectWidth, canvas);
     }
