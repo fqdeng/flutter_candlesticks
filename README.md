@@ -22,7 +22,7 @@ Install for Flutter [with pub](https://pub.dartlang.org/packages/flutter_candles
 | increaseColor      | Default `Colors.green`. Color of increasing candles.                     |
 | decreaseColor      | Default `Colors.red`. Color of decreasing candles.                       |
 
-### Latest Image
+## Latest Image
 <img src="./screenshots/latest.png" >
 
 ## Examples
