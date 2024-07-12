@@ -78,7 +78,7 @@ class _OHLCVGraph extends State<OHLCVGraph> {
           onExit: (PointerExitEvent event) {
             setState(() {
               _currentPosition =
-                  null; // Clear position when the mouse leaves the widget
+              null; // Clear position when the mouse leaves the widget
             });
           },
           child: CustomPaint(
@@ -102,19 +102,18 @@ class _OHLCVGraph extends State<OHLCVGraph> {
 }
 
 class _OHLCVPainter extends CustomPainter {
-  _OHLCVPainter(
-      {required this.currentPosition,
-      required this.data,
-      required this.lineWidth,
-      required this.enableGridLines,
-      required this.gridLineColor,
-      required this.gridLineAmount,
-      required this.gridLineWidth,
-      required this.gridLineLabelColor,
-      required this.volumeProp,
-      required this.labelPrefix,
-      required this.increaseColor,
-      required this.decreaseColor});
+  _OHLCVPainter({required this.currentPosition,
+    required this.data,
+    required this.lineWidth,
+    required this.enableGridLines,
+    required this.gridLineColor,
+    required this.gridLineAmount,
+    required this.gridLineWidth,
+    required this.gridLineLabelColor,
+    required this.volumeProp,
+    required this.labelPrefix,
+    required this.increaseColor,
+    required this.decreaseColor});
 
   final Offset? currentPosition;
   final List data;
@@ -171,7 +170,7 @@ class _OHLCVPainter extends CustomPainter {
         } else {
           gridLineText = gridLineValue.round().toString().replaceAllMapped(
               new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-              (Match m) => "${m[1]},");
+                  (Match m) => "${m[1]},");
         }
 
         gridLineTextPainters.add(new TextPainter(
@@ -212,7 +211,9 @@ class _OHLCVPainter extends CustomPainter {
 
     if (enableGridLines) {
       InlineSpan inlineSpan = gridLineTextPainters[0].text!;
-      width = size.width - inlineSpan.toPlainText().length * 6;
+      width = size.width - inlineSpan
+          .toPlainText()
+          .length * 6;
       Paint gridPaint = new Paint()
         ..color = gridLineColor
         ..strokeWidth = gridLineWidth;
@@ -263,8 +264,15 @@ class _OHLCVPainter extends CustomPainter {
         rectPaint = new Paint()
           ..color = decreaseColor
           ..strokeWidth = lineWidth;
-        drawCandleLineAndVolume(rectLeft, rectTop, rectRight, rectBottom,
-            canvas, rectPaint, volumeBarTop, volumeBarBottom);
+        drawCandleLineAndVolume(
+            rectLeft,
+            rectTop,
+            rectRight,
+            rectBottom,
+            canvas,
+            rectPaint,
+            volumeBarTop,
+            volumeBarBottom);
       } else {
         // Draw candlestick if increase
         rectTop = (height - (data[i]["close"] - _min) * heightNormalizer) +
@@ -274,8 +282,15 @@ class _OHLCVPainter extends CustomPainter {
         rectPaint = new Paint()
           ..color = increaseColor
           ..strokeWidth = lineWidth;
-        drawCandleLineAndVolume(rectLeft, rectTop, rectRight, rectBottom,
-            canvas, rectPaint, volumeBarTop, volumeBarBottom);
+        drawCandleLineAndVolume(
+            rectLeft,
+            rectTop,
+            rectRight,
+            rectBottom,
+            canvas,
+            rectPaint,
+            volumeBarTop,
+            volumeBarBottom);
       }
 
       // Draw low/high candlestick wicks
@@ -327,15 +342,16 @@ class _OHLCVPainter extends CustomPainter {
 
       final double rectWidth = 220.0;
       final double rectHeight = 200.0;
-
+      bool leftOrRight = currentPosition!.dx > (width - rectWidth)
       Rect rect = Rect.fromLTWH(
-          currentPosition!.dx > (width - rectWidth)
-              ? currentPosition!.dx - 2 - rectWidth // create a safe area for the rect show the stock price info
+          leftOrRight
+              ? currentPosition!.dx - 2 -
+              rectWidth // create a safe area for the rect show the stock price info
               : currentPosition!.dx + 2,
           currentPosition!.dy + 2, // Top
           rectWidth, // Width
           rectHeight // Height
-          );
+      );
 
       canvas.drawRect(rect, rectPaint);
 
@@ -345,15 +361,18 @@ class _OHLCVPainter extends CustomPainter {
       var low = data[item]["low"];
       var volumeto = data[item]["volumeto"];
       var offset = null;
-      offset = drawText("high: $high", null, rectWidth, canvas);
-      offset = drawText("low: $low", offset, rectWidth, canvas);
-      offset = drawText("open: $open", offset, rectWidth, canvas);
-      offset = drawText("close: $close", offset, rectWidth, canvas);
-      offset = drawText("volume: $volumeto", offset, rectWidth, canvas);
+      offset = drawText(leftOrRight, "high: $high", null, rectWidth, canvas);
+      offset = drawText(leftOrRight, "low: $low", offset, rectWidth, canvas);
+      offset = drawText(leftOrRight, "open: $open", offset, rectWidth, canvas);
+      offset =
+          drawText(leftOrRight, "close: $close", offset, rectWidth, canvas);
+      offset =
+          drawText(leftOrRight, "volume: $volumeto", offset, rectWidth, canvas);
     }
   }
 
-  Offset drawText(text, Offset? initOffset, double rectWidth, Canvas canvas) {
+  Offset drawText(bool leftOrRight, text, Offset? initOffset, double rectWidth,
+      Canvas canvas) {
     final double positionOffsetDx = 20;
     final double positionOffsetDy = 10;
 
@@ -367,19 +386,22 @@ class _OHLCVPainter extends CustomPainter {
     textPainter.layout(minWidth: 0, maxWidth: rectWidth);
 
     var offset = null;
+
+    var x = leftOrRight
+        ? currentPosition!.dx - rectWidth + positionOffsetDx
+        : currentPosition!.dx + positionOffsetDx;
     if (initOffset == null) {
-      offset = Offset(currentPosition!.dx + positionOffsetDx,
+      offset = Offset(x,
           currentPosition!.dy + positionOffsetDy);
     } else {
-      offset = Offset(currentPosition!.dx + positionOffsetDx,
+      offset = Offset(x,
           initOffset.dy + textPainter.height + positionOffsetDy);
     }
     textPainter.paint(canvas, offset);
     return offset;
   }
 
-  void drawCandleLineAndVolume(
-      double rectLeft,
+  void drawCandleLineAndVolume(double rectLeft,
       double rectTop,
       double rectRight,
       double rectBottom,
@@ -392,7 +414,7 @@ class _OHLCVPainter extends CustomPainter {
 
     // Draw volume bars
     Rect volumeRect =
-        new Rect.fromLTRB(rectLeft, volumeBarTop, rectRight, volumeBarBottom);
+    new Rect.fromLTRB(rectLeft, volumeBarTop, rectRight, volumeBarBottom);
     canvas.drawRect(volumeRect, rectPaint);
   }
 
