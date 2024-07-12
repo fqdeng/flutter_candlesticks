@@ -329,11 +329,14 @@ class _OHLCVPainter extends CustomPainter {
       final double rectHeight = 200.0;
 
       Rect rect = Rect.fromLTWH(
-          currentPosition!.dx + 2, // Left
+          currentPosition!.dx > (width - rectWidth)
+              ? currentPosition!.dx - 2 - rectWidth // create a safe area for the rect show the stock price info
+              : currentPosition!.dx + 2,
           currentPosition!.dy + 2, // Top
           rectWidth, // Width
           rectHeight // Height
           );
+
       canvas.drawRect(rect, rectPaint);
 
       var open = data[item]["open"];
