@@ -342,9 +342,9 @@ class _OHLCVPainter extends CustomPainter {
 
       final double rectWidth = 220.0;
       final double rectHeight = 200.0;
-      bool leftOrRight = currentPosition!.dx > (width - rectWidth)
+      bool madeTheBoxOnTheLeftOrRightOfMouse = currentPosition!.dx > (width - rectWidth);
       Rect rect = Rect.fromLTWH(
-          leftOrRight
+          madeTheBoxOnTheLeftOrRightOfMouse
               ? currentPosition!.dx - 2 -
               rectWidth // create a safe area for the rect show the stock price info
               : currentPosition!.dx + 2,
@@ -361,13 +361,13 @@ class _OHLCVPainter extends CustomPainter {
       var low = data[item]["low"];
       var volumeto = data[item]["volumeto"];
       var offset = null;
-      offset = drawText(leftOrRight, "high: $high", null, rectWidth, canvas);
-      offset = drawText(leftOrRight, "low: $low", offset, rectWidth, canvas);
-      offset = drawText(leftOrRight, "open: $open", offset, rectWidth, canvas);
+      offset = drawText(madeTheBoxOnTheLeftOrRightOfMouse, "high: $high", null, rectWidth, canvas);
+      offset = drawText(madeTheBoxOnTheLeftOrRightOfMouse, "low: $low", offset, rectWidth, canvas);
+      offset = drawText(madeTheBoxOnTheLeftOrRightOfMouse, "open: $open", offset, rectWidth, canvas);
       offset =
-          drawText(leftOrRight, "close: $close", offset, rectWidth, canvas);
+          drawText(madeTheBoxOnTheLeftOrRightOfMouse, "close: $close", offset, rectWidth, canvas);
       offset =
-          drawText(leftOrRight, "volume: $volumeto", offset, rectWidth, canvas);
+          drawText(madeTheBoxOnTheLeftOrRightOfMouse, "volume: $volumeto", offset, rectWidth, canvas);
     }
   }
 
